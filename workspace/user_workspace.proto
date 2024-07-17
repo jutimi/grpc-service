@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+import "common/common.proto";
+option go_package = "github.com/jutimi/grpc-service/workspace";
+
+package workspace;
+
+service UserWorkspaceRoute {
+    rpc GetUserWorkspaceById(common.GetByIdParams) returns (UserWorkspaceReponse) {}
+}
+
+// ----------------------- Params -----------------------
+
+// ----------------------- Response -----------------------
+message UserWorkspaceReponse {
+    bool success = 1;
+    UserWorkspaceDetail data = 2;
+    common.ErrorResponse error = 3;
+}
+
+message UserWorkspaceDetail {
+    string id = 1;
+    string name = 2;
+    bool is_actvice = 3;
+    string role = 4;
+}

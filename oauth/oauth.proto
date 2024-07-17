@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "common/common.proto";
+option go_package = "github.com/jutimi/grpc-service/oauth";
+
+package oauth;
+
+service OAuthRoute {
+    rpc CheckUserPermission(CheckPermissionParams) returns (CheckPermissionResponse) {}
+    rpc CheckWSPermission(CheckPermissionParams) returns (CheckPermissionResponse) {}
+    rpc CheckUserWSPermisison(CheckPermissionParams) returns (CheckPermissionResponse) {}
+}
+
+// ----------------------- Params -----------------------
+message CheckPermissionParams {
+    string token = 1;
+}
+
+// ----------------------- Response -----------------------
+message CheckPermissionResponse {
+    bool success = 1;
+    common.ErrorResponse error = 2;
+}

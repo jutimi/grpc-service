@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/jutimi/grpc-service/common";
+
+// ----------------------- Params -----------------------
+message GetByIdParams {
+    string id = 1;
+}
+
+// ----------------------- Response -----------------------
+message ErrorResponse {
+    int32 errorCode = 1;
+    string errorMessage = 2;
+}
+
+message SuccessResponse {
+    bool success = 1;
+    ErrorResponse error = 2;
+}

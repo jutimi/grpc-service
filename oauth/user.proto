@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+import "common/common.proto";
+option go_package = "github.com/jutimi/grpc-service/oauth";
+
+package oauth;
+
+service UserRoute {
+    rpc GetUserById(common.GetByIdParams) returns (UserResponse) {}
+    rpc GetUserByFilter(GetUserByFilterParams) returns (UserResponse) {}
+    rpc GetUsersByFilter(GetUserByFilterParams) returns (UsersResponse) {}
+    rpc CreateUser(CreateUserParams) returns (common.SuccessResponse) {}
+
+    rpc BulkCreateUsers(stream FileChunk) returns (UploadResponse) {}
+}
+
+// ----------------------- Params -----------------------
+message GetUserByFilterParams {
+    optional int32 limit = 1;
+    optional int32 offset = 2;
+
+    optional string phoneNumber = 3;
+    optional string id = 4;
+    optional string email = 5;
+    
+    repeated string phoneNumbers = 6;
+    repeated string ids = 7;
+    repeated string emails = 8; 
+}
+
+message FileChunk {
+    bytes content = 1;
+}
+
+message CreateUserParams {
+    string phoneNumber = 1;
+    string email = 2;
+    string password = 3;
+}
+
+// ----------------------- Response -----------------------
+message UserResponse {
+    bool success = 1;
+    UserDetail data = 2;
+    common.ErrorResponse error = 3;
+}
+
+message UserDetail {
+    string id = 1;
+    optional string phoneNumber = 2;
+    optional string email = 3;
+}
+
+message UsersResponse {
+    bool success = 1;
+    repeated UserDetail data = 2;
+    common.ErrorResponse error = 3;
+}
+  
+message UploadResponse {
+    bool success = 1;
+    common.ErrorResponse error = 2;
+}
