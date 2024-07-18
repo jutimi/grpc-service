@@ -6,13 +6,13 @@ option go_package = "github.com/jutimi/grpc-service/workspace";
 package workspace;
 
 service UserWorkspaceRoute {
-    rpc GetUserWorkspaceById(common.GetByIdParams) returns (UserWorkspaceReponse) {}
+    rpc GetUserWorkspaceById(common.GetByIdParams) returns (UserWorkspaceResponse) {}
 }
 
 // ----------------------- Params -----------------------
 
 // ----------------------- Response -----------------------
-message UserWorkspaceReponse {
+message UserWorkspaceResponse {
     bool success = 1;
     UserWorkspaceDetail data = 2;
     common.ErrorResponse error = 3;

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserWorkspaceRouteClient interface {
-	GetUserWorkspaceById(ctx context.Context, in *common.GetByIdParams, opts ...grpc.CallOption) (*UserWorkspaceReponse, error)
+	GetUserWorkspaceById(ctx context.Context, in *common.GetByIdParams, opts ...grpc.CallOption) (*UserWorkspaceResponse, error)
 }
 
 type userWorkspaceRouteClient struct {
@@ -34,8 +34,8 @@ func NewUserWorkspaceRouteClient(cc grpc.ClientConnInterface) UserWorkspaceRoute
 	return &userWorkspaceRouteClient{cc}
 }
 
-func (c *userWorkspaceRouteClient) GetUserWorkspaceById(ctx context.Context, in *common.GetByIdParams, opts ...grpc.CallOption) (*UserWorkspaceReponse, error) {
-	out := new(UserWorkspaceReponse)
+func (c *userWorkspaceRouteClient) GetUserWorkspaceById(ctx context.Context, in *common.GetByIdParams, opts ...grpc.CallOption) (*UserWorkspaceResponse, error) {
+	out := new(UserWorkspaceResponse)
 	err := c.cc.Invoke(ctx, "/workspace.UserWorkspaceRoute/GetUserWorkspaceById", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (c *userWorkspaceRouteClient) GetUserWorkspaceById(ctx context.Context, in 
 // All implementations must embed UnimplementedUserWorkspaceRouteServer
 // for forward compatibility
 type UserWorkspaceRouteServer interface {
-	GetUserWorkspaceById(context.Context, *common.GetByIdParams) (*UserWorkspaceReponse, error)
+	GetUserWorkspaceById(context.Context, *common.GetByIdParams) (*UserWorkspaceResponse, error)
 	mustEmbedUnimplementedUserWorkspaceRouteServer()
 }
 
@@ -55,7 +55,7 @@ type UserWorkspaceRouteServer interface {
 type UnimplementedUserWorkspaceRouteServer struct {
 }
 
-func (UnimplementedUserWorkspaceRouteServer) GetUserWorkspaceById(context.Context, *common.GetByIdParams) (*UserWorkspaceReponse, error) {
+func (UnimplementedUserWorkspaceRouteServer) GetUserWorkspaceById(context.Context, *common.GetByIdParams) (*UserWorkspaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserWorkspaceById not implemented")
 }
 func (UnimplementedUserWorkspaceRouteServer) mustEmbedUnimplementedUserWorkspaceRouteServer() {}
