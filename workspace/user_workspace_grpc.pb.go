@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserWorkspaceRouteClient interface {
 	GetUserWorkspaceById(ctx context.Context, in *common.GetByIdParams, opts ...grpc.CallOption) (*UserWorkspaceResponse, error)
+	GetUserWorkspaceByFilter(ctx context.Context, in *GetUserWorkspaceByFilterParams, opts ...grpc.CallOption) (*UserWorkspaceResponse, error)
+	GetUserWorkspacesByFilter(ctx context.Context, in *GetUserWorkspaceByFilterParams, opts ...grpc.CallOption) (*UserWorkspacesResponse, error)
 }
 
 type userWorkspaceRouteClient struct {
@@ -43,11 +45,31 @@ func (c *userWorkspaceRouteClient) GetUserWorkspaceById(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *userWorkspaceRouteClient) GetUserWorkspaceByFilter(ctx context.Context, in *GetUserWorkspaceByFilterParams, opts ...grpc.CallOption) (*UserWorkspaceResponse, error) {
+	out := new(UserWorkspaceResponse)
+	err := c.cc.Invoke(ctx, "/workspace.UserWorkspaceRoute/GetUserWorkspaceByFilter", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userWorkspaceRouteClient) GetUserWorkspacesByFilter(ctx context.Context, in *GetUserWorkspaceByFilterParams, opts ...grpc.CallOption) (*UserWorkspacesResponse, error) {
+	out := new(UserWorkspacesResponse)
+	err := c.cc.Invoke(ctx, "/workspace.UserWorkspaceRoute/GetUserWorkspacesByFilter", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserWorkspaceRouteServer is the server API for UserWorkspaceRoute service.
 // All implementations must embed UnimplementedUserWorkspaceRouteServer
 // for forward compatibility
 type UserWorkspaceRouteServer interface {
 	GetUserWorkspaceById(context.Context, *common.GetByIdParams) (*UserWorkspaceResponse, error)
+	GetUserWorkspaceByFilter(context.Context, *GetUserWorkspaceByFilterParams) (*UserWorkspaceResponse, error)
+	GetUserWorkspacesByFilter(context.Context, *GetUserWorkspaceByFilterParams) (*UserWorkspacesResponse, error)
 	mustEmbedUnimplementedUserWorkspaceRouteServer()
 }
 
@@ -57,6 +79,12 @@ type UnimplementedUserWorkspaceRouteServer struct {
 
 func (UnimplementedUserWorkspaceRouteServer) GetUserWorkspaceById(context.Context, *common.GetByIdParams) (*UserWorkspaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserWorkspaceById not implemented")
+}
+func (UnimplementedUserWorkspaceRouteServer) GetUserWorkspaceByFilter(context.Context, *GetUserWorkspaceByFilterParams) (*UserWorkspaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserWorkspaceByFilter not implemented")
+}
+func (UnimplementedUserWorkspaceRouteServer) GetUserWorkspacesByFilter(context.Context, *GetUserWorkspaceByFilterParams) (*UserWorkspacesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserWorkspacesByFilter not implemented")
 }
 func (UnimplementedUserWorkspaceRouteServer) mustEmbedUnimplementedUserWorkspaceRouteServer() {}
 
@@ -89,6 +117,42 @@ func _UserWorkspaceRoute_GetUserWorkspaceById_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserWorkspaceRoute_GetUserWorkspaceByFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserWorkspaceByFilterParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserWorkspaceRouteServer).GetUserWorkspaceByFilter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/workspace.UserWorkspaceRoute/GetUserWorkspaceByFilter",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserWorkspaceRouteServer).GetUserWorkspaceByFilter(ctx, req.(*GetUserWorkspaceByFilterParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserWorkspaceRoute_GetUserWorkspacesByFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserWorkspaceByFilterParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserWorkspaceRouteServer).GetUserWorkspacesByFilter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/workspace.UserWorkspaceRoute/GetUserWorkspacesByFilter",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserWorkspaceRouteServer).GetUserWorkspacesByFilter(ctx, req.(*GetUserWorkspaceByFilterParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserWorkspaceRoute_ServiceDesc is the grpc.ServiceDesc for UserWorkspaceRoute service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -99,6 +163,14 @@ var UserWorkspaceRoute_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserWorkspaceById",
 			Handler:    _UserWorkspaceRoute_GetUserWorkspaceById_Handler,
+		},
+		{
+			MethodName: "GetUserWorkspaceByFilter",
+			Handler:    _UserWorkspaceRoute_GetUserWorkspaceByFilter_Handler,
+		},
+		{
+			MethodName: "GetUserWorkspacesByFilter",
+			Handler:    _UserWorkspaceRoute_GetUserWorkspacesByFilter_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
