@@ -6,18 +6,17 @@ option go_package = "github.com/jutimi/grpc-service/oauth";
 package oauth;
 
 service OAuthRoute {
-    rpc CheckUserPermission(CheckPermissionParams) returns (CheckPermissionResponse) {}
-    rpc CheckWSPermission(CheckPermissionParams) returns (CheckPermissionResponse) {}
-    rpc CheckUserWSPermisison(CheckPermissionParams) returns (CheckPermissionResponse) {}
+    rpc VerifyUserToken(VerifyTokenParams) returns (VerifyTokenResponse) {}
+    rpc VerifyWSToken(VerifyTokenParams) returns (VerifyTokenResponse) {}
 }
 
 // ----------------------- Params -----------------------
-message CheckPermissionParams {
+message VerifyTokenParams {
     string token = 1;
 }
 
 // ----------------------- Response -----------------------
-message CheckPermissionResponse {
+message VerifyTokenResponse {
     bool success = 1;
     common.ErrorResponse error = 2;
 }
