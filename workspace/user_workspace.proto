@@ -21,6 +21,7 @@ message GetUserWorkspaceByFilterParams {
     repeated string user_ids = 6;
     optional string workspace_id = 7;
     repeated string workspace_ids = 8;
+    optional bool is_active = 9;
 }
 
 // ----------------------- Response -----------------------
