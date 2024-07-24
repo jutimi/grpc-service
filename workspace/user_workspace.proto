@@ -44,4 +44,5 @@ message UserWorkspaceDetail {
     bool is_actvice = 5;
     string role = 6;
     string workspace_id = 7;
+    string user_id = 8;
 }
