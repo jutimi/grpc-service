@@ -21,6 +21,7 @@ message GetUserWorkspaceByFilterParams {
     repeated string user_ids = 6;
     optional string workspace_id = 7;
     repeated string workspace_ids = 8;
+    optional bool is_active = 9;
 }
 
 // ----------------------- Response -----------------------
@@ -41,7 +42,8 @@ message UserWorkspaceDetail {
     string name = 2;
     string email = 3;
     string phone_number = 4;
-    bool is_actvice = 5;
+    bool is_active = 5;
     string role = 6;
     string workspace_id = 7;
+    string user_id = 8;
 }
