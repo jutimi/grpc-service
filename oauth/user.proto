@@ -6,7 +6,6 @@ option go_package = "github.com/jutimi/grpc-service/oauth";
 package oauth;
 
 service UserRoute {
-    rpc GetUserById(common.GetByIdParams) returns (UserResponse) {}
     rpc GetUserByFilter(GetUserByFilterParams) returns (UserResponse) {}
     rpc GetUsersByFilter(GetUserByFilterParams) returns (UsersResponse) {}
     rpc CreateUser(CreateUserParams) returns (common.SuccessResponse) {}
@@ -35,8 +34,8 @@ message FileChunk {
 }
 
 message CreateUserParams {
-    string phoneNumber = 1;
-    string email = 2;
+    optional string phoneNumber = 1;
+    optional string email = 2;
     string password = 3;
 }
 
