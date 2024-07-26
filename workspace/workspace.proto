@@ -6,10 +6,15 @@ option go_package = "github.com/jutimi/grpc-service/workspace";
 package workspace;
 
 service WorkspaceRoute {
-    rpc GetWorkspaceById(common.GetByIdParams) returns (WorkspaceResponse) {}
+    rpc GetWorkspaceByFilter(GetWorkspaceByFilterParams) returns (WorkspaceResponse) {}
 }
 
 // ----------------------- Params -----------------------
+message GetWorkspaceByFilterParams {
+    optional string id = 1;
+    repeated string ids = 2;
+    optional bool is_active = 3;
+}
 
 // ----------------------- Response -----------------------
 message WorkspaceResponse {
