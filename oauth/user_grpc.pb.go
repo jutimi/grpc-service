@@ -8,7 +8,6 @@ package oauth
 
 import (
 	context "context"
-	common "github.com/jutimi/grpc-service/common"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -25,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type UserRouteClient interface {
 	GetUserByFilter(ctx context.Context, in *GetUserByFilterParams, opts ...grpc.CallOption) (*UserResponse, error)
 	GetUsersByFilter(ctx context.Context, in *GetUserByFilterParams, opts ...grpc.CallOption) (*UsersResponse, error)
-	CreateUser(ctx context.Context, in *CreateUserParams, opts ...grpc.CallOption) (*common.SuccessResponse, error)
+	CreateUser(ctx context.Context, in *CreateUserParams, opts ...grpc.CallOption) (*UserResponse, error)
 	BulkCreateUsers(ctx context.Context, opts ...grpc.CallOption) (UserRoute_BulkCreateUsersClient, error)
 }
 
@@ -55,8 +54,8 @@ func (c *userRouteClient) GetUsersByFilter(ctx context.Context, in *GetUserByFil
 	return out, nil
 }
 
-func (c *userRouteClient) CreateUser(ctx context.Context, in *CreateUserParams, opts ...grpc.CallOption) (*common.SuccessResponse, error) {
-	out := new(common.SuccessResponse)
+func (c *userRouteClient) CreateUser(ctx context.Context, in *CreateUserParams, opts ...grpc.CallOption) (*UserResponse, error) {
+	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, "/oauth.UserRoute/CreateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,7 +103,7 @@ func (x *userRouteBulkCreateUsersClient) CloseAndRecv() (*UploadResponse, error)
 type UserRouteServer interface {
 	GetUserByFilter(context.Context, *GetUserByFilterParams) (*UserResponse, error)
 	GetUsersByFilter(context.Context, *GetUserByFilterParams) (*UsersResponse, error)
-	CreateUser(context.Context, *CreateUserParams) (*common.SuccessResponse, error)
+	CreateUser(context.Context, *CreateUserParams) (*UserResponse, error)
 	BulkCreateUsers(UserRoute_BulkCreateUsersServer) error
 	mustEmbedUnimplementedUserRouteServer()
 }
@@ -119,7 +118,7 @@ func (UnimplementedUserRouteServer) GetUserByFilter(context.Context, *GetUserByF
 func (UnimplementedUserRouteServer) GetUsersByFilter(context.Context, *GetUserByFilterParams) (*UsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUsersByFilter not implemented")
 }
-func (UnimplementedUserRouteServer) CreateUser(context.Context, *CreateUserParams) (*common.SuccessResponse, error) {
+func (UnimplementedUserRouteServer) CreateUser(context.Context, *CreateUserParams) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
 func (UnimplementedUserRouteServer) BulkCreateUsers(UserRoute_BulkCreateUsersServer) error {

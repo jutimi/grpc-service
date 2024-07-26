@@ -8,7 +8,7 @@ package oauth;
 service UserRoute {
     rpc GetUserByFilter(GetUserByFilterParams) returns (UserResponse) {}
     rpc GetUsersByFilter(GetUserByFilterParams) returns (UsersResponse) {}
-    rpc CreateUser(CreateUserParams) returns (common.SuccessResponse) {}
+    rpc CreateUser(CreateUserParams) returns (UserResponse) {}
 
     rpc BulkCreateUsers(stream FileChunk) returns (UploadResponse) {}
 }
@@ -58,5 +58,6 @@ message UsersResponse {
   
 message UploadResponse {
     bool success = 1;
-    common.ErrorResponse error = 2;
+    repeated string data = 2;
+    common.ErrorResponse error = 3;
 }
