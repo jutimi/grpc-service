@@ -10,7 +10,7 @@ service UserRoute {
     rpc GetUsersByFilter(GetUserByFilterParams) returns (UsersResponse) {}
     rpc CreateUser(CreateUserParams) returns (UserResponse) {}
 
-    rpc BulkCreateUsers(stream FileChunk) returns (UploadResponse) {}
+    rpc BulkCreateUsers( CreateUsersParams) returns (UsersResponse) {}
 }
 
 // ----------------------- Params -----------------------
@@ -39,6 +39,10 @@ message CreateUserParams {
     string password = 3;
 }
 
+message CreateUsersParams {
+    repeated CreateUserParams users = 1;
+}
+
 // ----------------------- Response -----------------------
 message UserResponse {
     bool success = 1;
@@ -57,11 +61,5 @@ message UserDetail {
 message UsersResponse {
     bool success = 1;
     repeated UserDetail data = 2;
-    common.ErrorResponse error = 3;
-}
-  
-message UploadResponse {
-    bool success = 1;
-    repeated string data = 2;
     common.ErrorResponse error = 3;
 }
