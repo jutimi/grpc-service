@@ -26,4 +26,5 @@ message WorkspaceResponse {
 message WorkspaceDetail {
     string id = 1;
     string name = 2;
+    bool is_active = 3;
 }
