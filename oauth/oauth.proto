@@ -8,12 +8,17 @@ package oauth;
 service OAuthRoute {
     rpc VerifyUserToken(VerifyTokenParams) returns (VerifyTokenResponse) {}
     rpc VerifyWSToken(VerifyTokenParams) returns (VerifyTokenResponse) {}
-    rpc VerifyWSPermission(VerifyTokenParams) returns (VerifyTokenResponse) {}
+    rpc VerifyWSPermission(VerifyPermissionParams) returns (VerifyTokenResponse) {}
 }
 
 // ----------------------- Params -----------------------
 message VerifyTokenParams {
     string token = 1;
+}
+
+message VerifyPermissionParams {
+    string token = 1;
+    string url = 2;
 }
 
 // ----------------------- Response -----------------------

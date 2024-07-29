@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type OAuthRouteClient interface {
 	VerifyUserToken(ctx context.Context, in *VerifyTokenParams, opts ...grpc.CallOption) (*VerifyTokenResponse, error)
 	VerifyWSToken(ctx context.Context, in *VerifyTokenParams, opts ...grpc.CallOption) (*VerifyTokenResponse, error)
-	VerifyWSPermission(ctx context.Context, in *VerifyTokenParams, opts ...grpc.CallOption) (*VerifyTokenResponse, error)
+	VerifyWSPermission(ctx context.Context, in *VerifyPermissionParams, opts ...grpc.CallOption) (*VerifyTokenResponse, error)
 }
 
 type oAuthRouteClient struct {
@@ -53,7 +53,7 @@ func (c *oAuthRouteClient) VerifyWSToken(ctx context.Context, in *VerifyTokenPar
 	return out, nil
 }
 
-func (c *oAuthRouteClient) VerifyWSPermission(ctx context.Context, in *VerifyTokenParams, opts ...grpc.CallOption) (*VerifyTokenResponse, error) {
+func (c *oAuthRouteClient) VerifyWSPermission(ctx context.Context, in *VerifyPermissionParams, opts ...grpc.CallOption) (*VerifyTokenResponse, error) {
 	out := new(VerifyTokenResponse)
 	err := c.cc.Invoke(ctx, "/oauth.OAuthRoute/VerifyWSPermission", in, out, opts...)
 	if err != nil {
@@ -68,7 +68,7 @@ func (c *oAuthRouteClient) VerifyWSPermission(ctx context.Context, in *VerifyTok
 type OAuthRouteServer interface {
 	VerifyUserToken(context.Context, *VerifyTokenParams) (*VerifyTokenResponse, error)
 	VerifyWSToken(context.Context, *VerifyTokenParams) (*VerifyTokenResponse, error)
-	VerifyWSPermission(context.Context, *VerifyTokenParams) (*VerifyTokenResponse, error)
+	VerifyWSPermission(context.Context, *VerifyPermissionParams) (*VerifyTokenResponse, error)
 	mustEmbedUnimplementedOAuthRouteServer()
 }
 
@@ -82,7 +82,7 @@ func (UnimplementedOAuthRouteServer) VerifyUserToken(context.Context, *VerifyTok
 func (UnimplementedOAuthRouteServer) VerifyWSToken(context.Context, *VerifyTokenParams) (*VerifyTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyWSToken not implemented")
 }
-func (UnimplementedOAuthRouteServer) VerifyWSPermission(context.Context, *VerifyTokenParams) (*VerifyTokenResponse, error) {
+func (UnimplementedOAuthRouteServer) VerifyWSPermission(context.Context, *VerifyPermissionParams) (*VerifyTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyWSPermission not implemented")
 }
 func (UnimplementedOAuthRouteServer) mustEmbedUnimplementedOAuthRouteServer() {}
@@ -135,7 +135,7 @@ func _OAuthRoute_VerifyWSToken_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _OAuthRoute_VerifyWSPermission_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerifyTokenParams)
+	in := new(VerifyPermissionParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func _OAuthRoute_VerifyWSPermission_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/oauth.OAuthRoute/VerifyWSPermission",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OAuthRouteServer).VerifyWSPermission(ctx, req.(*VerifyTokenParams))
+		return srv.(OAuthRouteServer).VerifyWSPermission(ctx, req.(*VerifyPermissionParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }
