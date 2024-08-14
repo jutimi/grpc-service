@@ -18,11 +18,11 @@ message GetUserByFilterParams {
     optional int32 limit = 1;
     optional int32 offset = 2;
 
-    optional string phoneNumber = 3;
+    optional string phone_number = 3;
     optional string id = 4;
     optional string email = 5;
     
-    repeated string phoneNumbers = 6;
+    repeated string phone_numbers = 6;
     repeated string ids = 7;
     repeated string emails = 8; 
 
@@ -34,7 +34,7 @@ message FileChunk {
 }
 
 message CreateUserParams {
-    optional string phoneNumber = 1;
+    optional string phone_number = 1;
     optional string email = 2;
     string password = 3;
 }
@@ -52,7 +52,7 @@ message UserResponse {
 
 message UserDetail {
     string id = 1;
-    optional string phoneNumber = 2;
+    optional string phone_number = 2;
     optional string email = 3;
     int32 limit_workspace = 4;
     bool is_active = 5;
